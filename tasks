@@ -1,0 +1,9 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+
+% -mode(compile).
+% -compile(native).
+
+main(_) ->
+  io:format("Testando opt ~n", []),
+  erlang:halt(0).
