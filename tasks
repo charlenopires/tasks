@@ -6,4 +6,5 @@
 
 main(_) ->
   io:format("Testando opt ~n", []),
+  % io:format("~s\n", [escript:script_name()]),
   erlang:halt(0).
