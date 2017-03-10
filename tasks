@@ -4,7 +4,10 @@
 % -mode(compile).
 % -compile(native).
 
+%TODO: See utf-8 in Erlang, how to work?
+
 main(_) ->
-  io:format("Testando opt ~n", []),
-  % io:format("~s\n", [escript:script_name()]),
+  % ScriptDir = filename:dirname(filename:absname(escript:script_name())),
+  {ok, ScriptDir} = file:get_cwd(),
+  io:format("Diretório: ~s~n", [PwScriptDird]),
   erlang:halt(0).
