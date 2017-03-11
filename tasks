@@ -7,8 +7,8 @@
 %TODO: See utf-8 in Erlang, how to work?
 
 main(_) ->
-  % ScriptDir = filename:dirname(filename:absname(escript:script_name())),
   {ok, ScriptDir} = file:get_cwd(),
   {ok, Listing} = file:list_dir_all(ScriptDir),
-  io:format("~s~n", [Listing]),
+  Dirs = lists:filter(fun(A)->filelib:is_dir(A) end,Listing),
+  io:format("~p~n", [Dirs]),
   erlang:halt(0).
