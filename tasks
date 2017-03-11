@@ -6,9 +6,35 @@
 
 %TODO: See utf-8 in Erlang, how to work?
 
-main(_) ->
-  {ok, ScriptDir} = file:get_cwd(),
-  {ok, Listing} = file:list_dir_all(ScriptDir),
-  Dirs = lists:filter(fun(A)->filelib:is_dir(A) end,Listing),
-  io:format("~p~n", [Dirs]),
+info() ->
+  io:format("What the task?").
+
+update_git() -> io:format("Updating Git").
+
+% tasks update ruby
+main(Args) ->
+  case(Args) of
+    [] -> info();
+    lists:any(fun(X) -> X == "update" end, Args) -> update_git()
+  end,
   erlang:halt(0).
+
+
+
+  % io:format("~p~n", [Args]).
+
+%   {ok, ScriptDir} = file:get_cwd(),
+%   listing_dir(ScriptDir),
+%   io:format("~p~n", [Dirs]),
+  % erlang:halt(0).
+%
+% % Listing directories in this Directory
+% listing_dir(Dir) ->
+%   {ok, Listing} = file:list_dir_all(Dir),
+%   Dirs = lists:filter(fun(A)->filelib:is_dir(A) end,Listing).
+%
+%
+% % Update repository to all directories into
+% update_git(Dir) ->
+%   listing_dir(Dir).
+%   %TODO: updating git
