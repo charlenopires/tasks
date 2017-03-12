@@ -3,19 +3,23 @@
 
 -mode(compile).
 -compile(nowarn_unused_vars).
+% -import(color, [black/1, blackb/1, red/1, redb/1, green/1, greenb/1, blue/1, blueb/1]).
+% -import(color, [yellow/1, yellowb/1, magenta/1, magentab/1, cyan/1, cyanb/1, white/1, whiteb/1]).
+% -import(color, [on_black/1, on_red/1, on_green/1, on_blue/1, on_yellow/1, on_magenta/1, on_cyan/1, on_white/1]).
+% -import(color, [rgb/2, on_rgb/2]).
 
 %TODO: See utf-8 in Erlang, how to work?
 
 info() ->
+  application:start(color),
   io:format("What the task?~n"),
-  io:format("- update <directory> | Updating git repository of a specifical directory~n"),
+  io:format("- ~s <directory> | Updating git repository of a specifical directory~n", [color:rgb([0,1,0], "update")]),
   io:format("- updateall | Updating git repository of all directories in path~n"),
   io:format("- clean <directory> | Cleaning git repository of a specifical directory~n"),
   io:format("- cleanall | Cleaning git repository of all directories in path~n").
 
 update_git(Args) -> io:format("Updating Git").
 
-% tasks update ruby
 main(Args) ->
   case(Args) of
     [] -> info();
