@@ -1,21 +1,26 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
 
-% -mode(compile).
-% -compile(native).
+-mode(compile).
+-compile(nowarn_unused_vars).
 
 %TODO: See utf-8 in Erlang, how to work?
 
 info() ->
-  io:format("What the task?").
+  io:format("What the task?~n"),
+  io:format("- update <directory> | Updating git repository of a specifical directory~n"),
+  io:format("- updateall | Updating git repository of all directories in path~n"),
+  io:format("- clean <directory> | Cleaning git repository of a specifical directory~n"),
+  io:format("- cleanall | Cleaning git repository of all directories in path~n").
 
-update_git() -> io:format("Updating Git").
+update_git(Args) -> io:format("Updating Git").
 
 % tasks update ruby
 main(Args) ->
   case(Args) of
     [] -> info();
-    lists:any(fun(X) -> X == "update" end, Args) -> update_git()
+    ["update", _] -> update_git(Args);
+    Else -> info()
   end,
   erlang:halt(0).
 
