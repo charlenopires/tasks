@@ -38,7 +38,8 @@ info() ->
 main(Args) ->
   % debugger:start(),
   case(Args) of
-    ["update", _] -> update_git(Args);
+    ["update", _] -> update(Args);
+    ["updateall"] -> update_all(Args);
     Else -> info()
   end,
   erlang:halt(0).
@@ -46,13 +47,19 @@ main(Args) ->
 path(Args) ->
   [_,Dir] = Args,
   {ok, Pwd} = file:get_cwd(),
-  Listing = filename:join(Pwd,Dir).
+  Path = filename:join(Pwd,Dir).
 
 % Update repository to all directories into
-update_git(Args) ->
+update(Args) ->
   Dirs = listing_dirs(path(Args)),
-  io:fwrite("~p~n", [Dirs]).
+  %% recursion
+  update_git(Dir).
 
+update_all(Args) ->
+  io:fwrite("Update all!").
+
+update_git(Dir) ->
+  io:fwrite("Update git repository in specifical diretory!").
 % Listing directories in this Directory
 listing_dirs(ListDirs) ->
   {ok, List} = file:list_dir_all(ListDirs),
