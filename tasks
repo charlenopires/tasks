@@ -2,7 +2,7 @@
 %% -*- erlang -*-
 
 -mode(compile).
--compile([nowarn_unused_vars, nowarn_unused_function]).
+-compile([nowarn_unused_vars, nowarn_unused_function, debug_info, verbose]).
 
 -define(ESC, <<"\e[">>).
 -define(RST, <<"0">>).
@@ -35,35 +35,28 @@ info() ->
   io:format("- ~s | ~s~n", [green("clean <directory>"), cyan("Cleaning git repository of a specifical directory")]),
   io:format("- ~s | ~s~n", [green("cleanall"), cyan("Cleaning git repository of all directories in path")]).
 
-update_git(Args) -> io:format("Updating Git").
-
 main(Args) ->
+  % debugger:start(),
   case(Args) of
-    [] -> info();
     ["update", _] -> update_git(Args);
     Else -> info()
   end,
   erlang:halt(0).
 
+path(Args) ->
+  [_,Dir] = Args,
+  {ok, Pwd} = file:get_cwd(),
+  Listing = filename:join(Pwd,Dir).
 
+% Update repository to all directories into
+update_git(Args) ->
+  Dirs = listing_dirs(path(Args)),
+  io:fwrite("~p~n", [Dirs]).
 
-  % io:format("~p~n", [Args]).
-
-%   {ok, ScriptDir} = file:get_cwd(),
-%   listing_dir(ScriptDir),
-%   io:format("~p~n", [Dirs]),
-  % erlang:halt(0).
-%
-% % Listing directories in this Directory
-% listing_dir(Dir) ->
-%   {ok, Listing} = file:list_dir_all(Dir),
-%   Dirs = lists:filter(fun(A)->filelib:is_dir(A) end,Listing).
-%
-%
-% % Update repository to all directories into
-% update_git(Dir) ->
-%   listing_dir(Dir).
-%   %TODO: updating git
+% Listing directories in this Directory
+listing_dirs(ListDirs) ->
+  {ok, List} = file:list_dir_all(ListDirs),
+  Dirs = lists:filter(fun(A)-> filelib:is_dir(filename:join(ListDirs,A)) end, List).
 
 %TODO: How to get import functions from module external into escript
 %TODO: See utf-8 in Erlang, how to work?
