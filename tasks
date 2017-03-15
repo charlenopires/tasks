@@ -57,12 +57,13 @@ update(Args) ->
 update_all(Args) ->
   io:fwrite("Update all!").
 
-update_git(_, []) ->
-  io:fwrite("Fim...").
-
+update_git(_, []) -> [];
 update_git(Path, [Head|Tail]) ->
-  % os:cmd("cd " ++ Path ++ "/" ++ Head ++ " && git pull && cd .."),
-  io:format("PATH: ~p~n | HEAD: ~s~n | TAIL: ~p~n",[Path, Head, Tail]),
+  io:format("Executando: ~s~n", [Head]),
+  os:cmd("cd " ++ Path ++ "/" ++ Head ++ " && git pull && cd .."),
+  % io:format("PATH: ~p~n | HEAD: ~s~n | TAIL: ~p~n",[Path, Head, Tail]),
+  io:fwrite("~n~n"),
+  io:fwrite("--------------------------------------------------------------------"),
   update_git(Path, Tail).
 
 % Listing directories in this Directory
