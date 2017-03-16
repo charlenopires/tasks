@@ -57,13 +57,12 @@ update(Args) ->
 update_all(Args) ->
   io:fwrite("Update all!").
 
-update_git(_, []) -> [];
+update_git(_Path, []) -> [];
 update_git(Path, [Head|Tail]) ->
-  io:format("Executando: ~s~n", [Head]),
+  io:format("~s~s~n", [red("Executing: "), green(Head)]),
   os:cmd("cd " ++ Path ++ "/" ++ Head ++ " && git pull && cd .."),
-  % io:format("PATH: ~p~n | HEAD: ~s~n | TAIL: ~p~n",[Path, Head, Tail]),
   io:fwrite("~n~n"),
-  io:fwrite("--------------------------------------------------------------------"),
+  io:format("~s~n",[magenta("--------------------------------------------------------------------")]),
   update_git(Path, Tail).
 
 % Listing directories in this Directory
@@ -73,3 +72,5 @@ listing_dirs(ListDirs) ->
 
 %TODO: How to get import functions from module external into escript
 %TODO: See utf-8 in Erlang, how to work?
+%TODO: Correct when not found folder for args, preventing this error, escript: exception error: no match of right hand side value {error,enoent}
+%TODO: Show Executing in directory
