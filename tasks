@@ -60,8 +60,8 @@ update_all(Args) ->
 update_git(_Path, []) -> [];
 update_git(Path, [Head|Tail]) ->
   io:format("~s~s~n", [red("Executing: "), green(Head)]),
-  os:cmd("cd " ++ Path ++ "/" ++ Head ++ " && git pull && cd .."),
-  io:fwrite("~n~n"),
+  Output = os:cmd("cd " ++ Path ++ "/" ++ Head ++ " && git pull && cd ..~n~n"),
+  io:format(Output),
   io:format("~s~n",[magenta("--------------------------------------------------------------------")]),
   update_git(Path, Tail).
 
